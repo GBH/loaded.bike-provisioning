@@ -1,1 +1,1 @@
-# loaded.bike-provisioning
+Provisioning ansible script for http://loaded.bike to be hosted on DigitalOcean (Ubuntu 16.10)

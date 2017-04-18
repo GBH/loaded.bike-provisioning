@@ -1,0 +1,46 @@
+---
+- hosts: app-servers
+  user: root
+
+  # Host won't have python installed the first time around
+  gather_facts: no
+  pre_tasks:
+    - name: Install python
+      raw: apt-get -y install python-simplejson
+
+  tasks:
+    - name: Gather facts
+      setup:
+
+    - name: Install build tools
+      apt: name=build-essential
+
+    # elixir
+    - name: Download Erlang
+      get_url: url=https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb dest=/tmp/erlang-solutions_1.0_all.deb
+
+    - name: Add Erlang repo
+      apt: deb=/tmp/erlang-solutions_1.0_all.deb
+
+    - name: Install Erlang
+      apt: name=esl-erlang update_cache=yes
+
+    - name: Install Elixir
+      apt: name=elixir state=present
+
+    # node
+    - name: Add nodesource apt key
+      apt_key:
+        url: https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x1655A0AB68576280
+        id: "68576280"
+        state: present
+
+    - name: Add Node repo
+      apt_repository:
+        repo: deb https://deb.nodesource.com/node_6.x yakkety main
+        state: present
+
+    - name: Install Node
+      apt: name=nodejs state=present
+
+    # postgres
