@@ -16,10 +16,10 @@
       raw: apt-get -y install python-simplejson
 
   roles:
-    # - common
-    # - ufw
-    # - user
-    # - nginx
-    # - elixir
-    # - node
+    - common
+    - ufw
+    - user
+    - nginx
+    - elixir
+    - node
     - postgresql

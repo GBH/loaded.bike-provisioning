@@ -7,6 +7,12 @@
     - postgresql-contrib-9.5
     - python-psycopg2
 
+- name: Configure database
+  template:
+    src: postgresql.conf.j2
+    dest: /etc/postgresql/9.5/main/postgresql.conf
+  notify: restart postgresql
+
 - name: Create database
   become: true
   become_user: postgres
