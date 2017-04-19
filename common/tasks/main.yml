@@ -1,0 +1,12 @@
+---
+- name: Gather facts
+  setup:
+
+- name: Install build tools
+  apt:
+    name: build-essential
+    state: present
+    update_cache: true
+  with_items:
+    build-essential
+    git-core

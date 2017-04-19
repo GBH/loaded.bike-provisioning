@@ -1,0 +1,15 @@
+---
+- name: Install firewall
+  apt: name=ufw state=present
+
+- name: Allow HTTP
+  ufw: rule=allow port=80 proto=tcp
+
+- name: Allow HTTPS
+  ufw: rule=allow port=443 proto=tcp
+
+- name: Allow SSH
+  ufw: rule=allow port=22 proto=tcp
+
+- name: Enable firewall
+  ufw: state=enabled policy=deny

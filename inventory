@@ -1,4 +1,0 @@
-app ansible_host=67.205.179.86
-
-[app-servers]
-app

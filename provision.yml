@@ -1,6 +1,11 @@
 ---
-- hosts: app-servers
+- hosts: production
   user: root
+
+  vars:
+    username: deploy
+    password: 1cfDQb6fECjNHYvbJnpX
+    public_key: ~/.ssh/id_rsa.pub
 
   # Host won't have python installed the first time around
   gather_facts: no
@@ -8,39 +13,47 @@
     - name: Install python
       raw: apt-get -y install python-simplejson
 
-  tasks:
-    - name: Gather facts
-      setup:
+  roles:
+    - common
+    - ufw
+    - user
+    - nginx
 
-    - name: Install build tools
-      apt: name=build-essential
+  # tasks:
+  #   - name: Gather facts
+  #     setup:
 
-    # elixir
-    - name: Download Erlang
-      get_url: url=https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb dest=/tmp/erlang-solutions_1.0_all.deb
+  #   - name: Install build tools
+  #     apt: name=build-essential
 
-    - name: Add Erlang repo
-      apt: deb=/tmp/erlang-solutions_1.0_all.deb
+  #   # elixir
+  #   - name: Download Erlang
+  #     get_url: url=https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb dest=/tmp/erlang-solutions_1.0_all.deb
 
-    - name: Install Erlang
-      apt: name=esl-erlang update_cache=yes
+  #   - name: Add Erlang repo
+  #     apt: deb=/tmp/erlang-solutions_1.0_all.deb
 
-    - name: Install Elixir
-      apt: name=elixir state=present
+  #   - name: Install Erlang
+  #     apt: name=esl-erlang update_cache=yes
 
-    # node
-    - name: Add nodesource apt key
-      apt_key:
-        url: https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x1655A0AB68576280
-        id: "68576280"
-        state: present
+  #   - name: Install Elixir
+  #     apt: name=elixir state=present
 
-    - name: Add Node repo
-      apt_repository:
-        repo: deb https://deb.nodesource.com/node_6.x yakkety main
-        state: present
+  #   # node
+  #   - name: Add nodesource apt key
+  #     apt_key:
+  #       url: https://keyserver.ubuntu.com/pks/lookup?op=get&fingerprint=on&search=0x1655A0AB68576280
+  #       id: "68576280"
+  #       state: present
 
-    - name: Install Node
-      apt: name=nodejs state=present
+  #   - name: Add Node repo
+  #     apt_repository:
+  #       repo: deb https://deb.nodesource.com/node_6.x yakkety main
+  #       state: present
 
-    # postgres
+  #   - name: Install Node
+  #     apt: name=nodejs state=present
+
+  #   # postgres
+  #   - name: Install postgres
+  #     apt: name=postgresql-9.5 state=present

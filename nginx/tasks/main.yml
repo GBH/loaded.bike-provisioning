@@ -1,0 +1,51 @@
+---
+- name: Add Nginx repo
+  apt_repository:
+    repo: ppa:nginx/development
+
+- name: Install Nginx
+  apt:
+    name: nginx
+    state: present
+    force: yes
+    update_cache: yes
+
+- name: Check Nginx configs exist
+  stat: path=/etc/nginx/.git
+  register: git_exists
+
+- name: Remove default Nginx configs
+  file:
+    path: /etc/nginx
+    state: absent
+  when: not git_exists.stat.exists
+
+- name: Clone Nginx configs
+  git:
+    repo: https://github.com/h5bp/server-configs-nginx.git
+    dest: /etc/nginx
+    version: master
+    force: yes
+  when: not git_exists.stat.exists
+
+- name: Fix error log file path
+  lineinfile:
+    dest: /etc/nginx/nginx.conf
+    regexp: '^error_log'
+    line: "error_log /var/log/nginx/error.log warn;"
+    state: present
+
+- name: Fix access log file path
+  lineinfile:
+    dest: /etc/nginx/nginx.conf
+    regexp: '^  access_log'
+    line: "  access_log /var/log/nginx/access.log;"
+    state: present
+
+- name: Set Nginx user
+  lineinfile:
+    dest: /etc/nginx/nginx.conf
+    regexp: "^user"
+    line: "user {{ username }};"
+    state: present
+  notify: restart nginx
