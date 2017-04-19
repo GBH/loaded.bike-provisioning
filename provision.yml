@@ -3,6 +3,7 @@
   user: root
 
   vars:
+    host: loaded.bike
     username: deploy
     password: 1cfDQb6fECjNHYvbJnpX
     public_key: ~/.ssh/id_rsa.pub

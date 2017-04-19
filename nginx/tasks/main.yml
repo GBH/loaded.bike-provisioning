@@ -31,16 +31,28 @@
 - name: Fix error log file path
   lineinfile:
     dest: /etc/nginx/nginx.conf
-    regexp: '^error_log'
+    regexp: '^\s*?error_log'
     line: "error_log /var/log/nginx/error.log warn;"
     state: present
 
 - name: Fix access log file path
   lineinfile:
     dest: /etc/nginx/nginx.conf
-    regexp: '^  access_log'
+    regexp: '^\s*?access_log'
     line: "  access_log /var/log/nginx/access.log;"
     state: present
+
+- name: Moving in site config
+  template:
+    src: default.conf.j2
+    dest: /etc/nginx/sites-available/default
+
+- name: Symlink default site
+  file:
+    src: /etc/nginx/sites-available/default
+    dest: /etc/nginx/sites-enabled/default
+    state: link
+  notify: reload nginx
 
 - name: Set Nginx user
   lineinfile:
