@@ -1,0 +1,22 @@
+- name: Install postgres
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - postgresql-9.5
+    - postgresql-contrib-9.5
+    - python-psycopg2
+
+- name: Create database
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: "{{ database }}"
+
+- name: Create user
+  become: true
+  become_user: postgres
+  postgresql_user:
+    db: "{{ database }}"
+    name: "{{ username }}"
+    password: "{{ password }}"

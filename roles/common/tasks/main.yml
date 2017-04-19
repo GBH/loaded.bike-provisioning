@@ -4,9 +4,9 @@
 
 - name: Install build tools
   apt:
-    name: build-essential
+    name: "{{ item }}"
     state: present
     update_cache: true
   with_items:
-    build-essential
-    git-core
+    - build-essential
+    - git
