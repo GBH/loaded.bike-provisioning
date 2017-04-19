@@ -1,6 +1,12 @@
 ---
 - hosts: production
-  user: root
+
+  # For initial provisioning
+  # user: root
+
+  # After ssh gets disabled for root
+  user: deploy
+  become: true
 
   vars:
     host: loaded.bike
@@ -9,14 +15,20 @@
     public_key: ~/.ssh/id_rsa.pub
     database: "loaded_bike_prod"
 
+    swapfile_location: /swapfile
+    swapfile_size: 1G
+    swapfile_swappiness: 10
+    swapfile_vfs_cache_pressure: 50
+
   # server won't have python installed the first time around
-  gather_facts: no
-  pre_tasks:
-    - name: Install python
-      raw: apt-get -y install python-simplejson
+  # gather_facts: no
+  # pre_tasks:
+  #  - name: Install python
+  #    raw: apt-get -y install python-simplejson
 
   roles:
     - common
+    - swap
     - ufw
     - user
     - nginx

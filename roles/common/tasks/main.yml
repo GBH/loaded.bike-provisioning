@@ -10,3 +10,4 @@
   with_items:
     - build-essential
     - git
+    - unattended-upgrades
