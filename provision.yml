@@ -5,7 +5,7 @@
   vars:
     host: loaded.bike
     username: deploy
-    password: 1cfDQb6fECjNHYvbJnpX
+    password: $6$JguPtpmjzFyXQ.H6$R2q3ssJrYwpN3xDn3AbP2NeXc6cZ8OKLEzWZb3FXu6j1H/sLCXyqnggSZbOeL3hoxjQ8tkK83qf.XWOxJH9ap0
     public_key: ~/.ssh/id_rsa.pub
     database: "loaded_bike_prod"
 
@@ -23,3 +23,4 @@
     - elixir
     - node
     - postgresql
+    - ssh
