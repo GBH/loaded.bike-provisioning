@@ -2,11 +2,11 @@
 - hosts: production
 
   # For initial provisioning
-  # user: root
+  user: root
 
   # After ssh gets disabled for root
-  user: deploy
-  become: true
+  # user: deploy
+  # become: true
 
   vars:
     host: loaded.bike
@@ -21,10 +21,10 @@
     swapfile_vfs_cache_pressure: 50
 
   # server won't have python installed the first time around
-  # gather_facts: no
-  # pre_tasks:
-  #  - name: Install python
-  #    raw: apt-get -y install python-simplejson
+  gather_facts: no
+  pre_tasks:
+   - name: Install python
+     raw: apt-get -y install python-simplejson
 
   roles:
     - common
