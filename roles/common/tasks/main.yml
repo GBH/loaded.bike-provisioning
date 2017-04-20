@@ -11,3 +11,4 @@
     - build-essential
     - git
     - unattended-upgrades
+    - imagemagick

@@ -11,4 +11,10 @@ server {
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
   }
+
+  location ~ ^/uploads/ {
+    root /home/deploy/loaded_bike/public;
+    expires max;
+    break;
+  }
 }
