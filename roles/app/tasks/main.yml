@@ -1,0 +1,11 @@
+- name: "generate secret key base"
+  command: "openssl rand -base64 48"
+  register: openssl_random_string
+
+- name: set secret_key_base
+  set_fact: secret_key_base="{{ openssl_random_string.stdout }}"
+
+- name: move prod.secret.exs
+  template:
+    src: prod.secret.exs.j2
+    dest: "/home/{{ username }}/prod.secret.exs"

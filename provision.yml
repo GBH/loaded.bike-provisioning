@@ -35,4 +35,5 @@
     - elixir
     - node
     - postgresql
+    - app
     - ssh
