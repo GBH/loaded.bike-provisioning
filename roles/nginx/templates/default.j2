@@ -1,6 +1,12 @@
 server {
   listen 80;
-  server_name {{ host }} www.{{ host }};
+  server_name www.{{ host }};
+  return 301 $scheme://{{ host }}$request_uri;
+}
+
+server {
+  listen 80;
+  server_name www.{{ host }};
 
   location / {
     proxy_set_header X-Real-IP $remote_addr;
