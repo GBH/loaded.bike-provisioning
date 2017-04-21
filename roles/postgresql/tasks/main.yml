@@ -18,6 +18,7 @@
   become_user: postgres
   postgresql_db:
     name: "{{ database }}"
+    owner: "{{ username }}"
 
 - name: Create user
   become: true
@@ -26,3 +27,4 @@
     db: "{{ database }}"
     name: "{{ username }}"
     password: "{{ username }}"
+    priv: "ALL"

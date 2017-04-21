@@ -1,0 +1,14 @@
+- name: Create folder
+  file:
+    path: /home/{{ username }}/db_backup
+    state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: Setup database backup cron job
+  cron:
+    name: rsync uploads
+    hour: 1
+    minute: 0
+    user: deploy
+    job: pg_dump loaded_bike_prod | gzip > /home/{{username}}/db_backup/prod_`date +\%Y-\%m-\%d_\%T`.sql.gz
