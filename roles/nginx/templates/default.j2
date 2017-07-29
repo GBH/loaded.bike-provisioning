@@ -7,6 +7,7 @@ server {
 server {
   listen 80;
   server_name {{ host }};
+  client_max_body_size 25M;
 
   location / {
     proxy_set_header X-Real-IP $remote_addr;
