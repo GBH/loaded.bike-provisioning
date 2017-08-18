@@ -28,7 +28,7 @@ server {
 
     # asset delivery using NGINX
     location ~* ^.+\.(css|cur|gif|gz|ico|jpg|jpeg|js|png|svg|woff|woff2)$ {
-      root /home/deploy/loaded_bike/priv/static;
+      root /home/deploy/loaded_bike/static;
       etag off;
       expires max;
       add_header Cache-Control public;
